@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlAdapter.XmlRepository", "XmlAdapter.XmlRepository\XmlAdapter.XmlRepository.csproj", "{0041035F-3919-4A00-B80E-B260A8B41F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTest", "XmlTest\XmlTest.csproj", "{3FDB4DAB-41FB-4835-9A44-C886A76E389C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0041035F-3919-4A00-B80E-B260A8B41F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0041035F-3919-4A00-B80E-B260A8B41F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0041035F-3919-4A00-B80E-B260A8B41F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0041035F-3919-4A00-B80E-B260A8B41F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FDB4DAB-41FB-4835-9A44-C886A76E389C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FDB4DAB-41FB-4835-9A44-C886A76E389C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FDB4DAB-41FB-4835-9A44-C886A76E389C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FDB4DAB-41FB-4835-9A44-C886A76E389C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
