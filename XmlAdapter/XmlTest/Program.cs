@@ -14,18 +14,30 @@ namespace XmlTest
         {
             string path = @"d:\website";
             XmlHelper helper = new XmlHelper(path);
-            
+
             //helper.CreateDocument();
 
-            object[] elements = { new XElement("a", "a"), new XElement("b", "b") };
-            //helper.AddXmlNodeToRoot("root", elements);
-            XmlElementInfor IdElement = new XmlElementInfor("a", "a");
-            //helper.DeleteNodeFromRoot("root", IdElement);
+            //helper.AddXElement("root", elements);
+            //helper.DeleteXElement("a");
 
-            XmlElementInfor[] updateValue = { new XmlElementInfor("a", "a"), new XmlElementInfor("b", "b") };
-            //helper.UpdateNodeFromRoot("root", IdElement, updateValue);
+            //helper.UpdateXElement("b", "aaaaa");
 
-            helper.QueryNodeFromRoot("root", IdElement);
+            //helper.QueryXElement("root");
+
+            XAttribute[] xa = { new XAttribute("v1", "113"), new XAttribute("v2", "2aa"), new XAttribute("v3", "111") };
+            //helper.AddOrUpdateXAttributeForXElement("b", xa);
+
+            XElement[] xes = { new XElement("test1", "1111"), new XElement("test2", "22222") };
+            //helper.AddElementToAfter("b", xes);
+            //helper.AddElementToBefore("b", xes);
+
+            //helper.AddAttributeToXElement("b", "v5", "test");
+
+            //helper.AddCommentToAfter("b", "zhishi1");
+            //helper.AddCommentToBefore("b", "zhishi2");
+
+            XElement newElement = new XElement("newone", "newone");
+            helper.ReplaceXElement("test1", "1111", newElement);
         }
     }
 }
