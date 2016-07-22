@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace XmlAdapter.XmlRepository
         public XmlHelper(string filePath)
         {
             _filePath = filePath;
+            if (!File.Exists(filePath))
+            {
+                CreateDocument();
+            }
         }
 
         /// <summary>
@@ -34,6 +39,18 @@ namespace XmlAdapter.XmlRepository
         {
             XElement rootNode = XElement.Load(_filePath);
             XElement newNode = new XElement(xName, childXElements);
+            rootNode.Add(newNode);
+            rootNode.Save(_filePath);
+        }
+        /// <summary>
+        /// 向XML中添加元素
+        /// </summary>
+        /// <param name="xName">元素名称</param>
+        /// <param name="xValue">元素值</param>
+        public void AddXElement(string xName, object xValue)
+        {
+            XElement rootNode = XElement.Load(_filePath);
+            XElement newNode = new XElement(xName, xValue);
             rootNode.Add(newNode);
             rootNode.Save(_filePath);
         }
@@ -69,6 +86,25 @@ namespace XmlAdapter.XmlRepository
             rootNode.Save(_filePath);
         }
         /// <summary>
+        /// 增加或修改元素值
+        /// </summary>
+        /// <param name="xName">元素名称</param>
+        /// <param name="xValue">元素值</param>
+        public void AddOrUpdateXElement(string xName, object xValue)
+        {
+            XElement rootNode = XElement.Load(_filePath);
+            XElement targetNode = (from target in rootNode.Descendants(xName)
+                                   select target).FirstOrDefault();
+            if (targetNode == null)
+            {
+                AddXElement(xName, xValue);
+            }
+            else
+            {
+                targetNode.SetValue(xValue);
+            }
+        }
+        /// <summary>
         /// 查询元素
         /// </summary>
         /// <param name="xName">元素名称</param>
@@ -78,11 +114,41 @@ namespace XmlAdapter.XmlRepository
             XElement rootNode = XElement.Load(_filePath);
             IEnumerable<XElement> targetNodes = from target in rootNode.Descendants(xName)
                                                 select target;
-            if (targetNodes == null)
+            if (targetNodes == null || targetNodes.Count() == 0)
             {
                 throw new Exception("不存在名称为【" + xName + "】的元素！");
             }
             return targetNodes;
+        }
+        public object QueryXElementValue(XElement sourceXElement, string xName)
+        {
+            IEnumerable<XElement> targetNodes = from target in sourceXElement.Descendants(xName)
+                                                select target;
+            if (targetNodes == null || targetNodes.Count() == 0)
+            {
+                throw new Exception("不存在名称为【" + xName + "】的元素！");
+            }
+            return targetNodes.FirstOrDefault().Value;
+        }
+        /// <summary>
+        /// 查询元素值
+        /// </summary>
+        /// <param name="xName">元素名称</param>
+        /// <returns></returns>
+        public object QueryXElementValue(string xName)
+        {
+            XElement rootNode = XElement.Load(_filePath);
+            IEnumerable<XElement> targetNodes = from target in rootNode.Descendants(xName)
+                                                select target;
+            if (targetNodes == null || targetNodes.FirstOrDefault() == null)
+            {
+                //throw new Exception("不存在名称为【" + xName + "】的元素！");
+                return null;
+            }
+            else
+            {
+                return targetNodes.FirstOrDefault().Value;
+            }
         }
 
         /// <summary>
@@ -164,6 +230,35 @@ namespace XmlAdapter.XmlRepository
             }
             targetNode.SetAttributeValue(attributeName, attributeValue);
             rootNode.Save(_filePath);
+        }
+        public void UpdateAttributeToXElement(string xName, string attributeName, object attributeValue)
+        {
+            XElement rootNode = XElement.Load(_filePath);
+            XElement targetNode = (from target in rootNode.Descendants(xName)
+                                   select target).FirstOrDefault();
+            if (targetNode == null)
+            {
+                throw new Exception("不存在名称为【" + xName + "】的元素！");
+            }
+            targetNode.SetAttributeValue(attributeName, attributeValue);
+            rootNode.Save(_filePath);
+        }
+        /// <summary>
+        /// 获取元素指定属性值
+        /// </summary>
+        /// <param name="xName">元素名称</param>
+        /// <param name="attributeName">属性名称</param>
+        /// <returns></returns>
+        public string QueryAttributeFromXElement(string xName, string attributeName)
+        {
+            XElement rootNode = XElement.Load(_filePath);
+            XElement targetNode = (from target in rootNode.Descendants(xName)
+                                   select target).FirstOrDefault();
+            if (targetNode == null)
+            {
+                throw new Exception("不存在名称为【" + xName + "】的元素！");
+            }
+            return targetNode.Attribute(attributeName).Value.ToString();
         }
         /// <summary>
         /// 在指定元素后添加注释
