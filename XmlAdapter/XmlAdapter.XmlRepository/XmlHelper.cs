@@ -12,22 +12,22 @@ namespace XmlAdapter.XmlRepository
     {
         private string _filePath;
 
-        public XmlHelper(string filePath)
+        public XmlHelper(string filePath, string rootName = "Root")
         {
             _filePath = filePath;
             if (!File.Exists(filePath))
             {
-                CreateDocument();
+                CreateDocument(rootName);
             }
         }
 
         /// <summary>
         /// 创建XML文件
         /// </summary>
-        public void CreateDocument()
+        public void CreateDocument(string rootName)
         {
             XDocument xdoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement("Root"));
+                new XElement(rootName));
             xdoc.Save(_filePath);
         }
         /// <summary>

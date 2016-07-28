@@ -15,7 +15,7 @@ namespace XmlTest
         {
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
-            string path = basePath + "a.xml";
+            string path = basePath + "a.config";
             string path1 = basePath + "b.xml";
             XmlHelper helper = new XmlHelper(path);
 
