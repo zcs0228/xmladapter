@@ -19,6 +19,13 @@ namespace XmlTest
             string path1 = basePath + "b.xml";
             XmlHelper helper = new XmlHelper(path);
 
+            //IEnumerable<XElement> result = helper.QueryXElement("Row");
+            //foreach(var item in result.Descendants())
+            //{
+            //    string name = item.Name.ToString();
+            //    string value = item.Value;
+            //}
+
             //helper.CreateDocument();
             //helper.AddXElement("test1", "a");
             //helper.DeleteXElement("a");
@@ -41,8 +48,27 @@ namespace XmlTest
             //XElement newElement = new XElement("newone", "newone");
             //helper.ReplaceXElement("test1", "1111", newElement);
             //helper.UpdateAttributeToXElement("test1", "v2", "123456");
-            DataTable dt = XmlToDataTable.Convert(path);
-            DataTableToXml.Convert(dt, path1);
+            //DataTable dt = XmlToDataTable.Convert(path);
+            //DataTableToXml.Convert(dt, path1);
+
+            //helper.ReadXML(@"<?xml version=""1.0"" encoding=""utf-8""?><Root><Columns>a, b, c</Columns><Row><a>4</a><b>5</b><c>6</c></Row></Root> ");
+            //helper.WriteXML("root");
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("a");
+            dt.Columns.Add("b");
+            DataRow dr1 = dt.NewRow();
+            dr1["a"] = 1;
+            dr1["b"] = 1;
+            dt.Rows.Add(dr1);
+            DataRow dr2 = dt.NewRow();
+            dr2["a"] = 2;
+            dr2["b"] = 3;
+            dt.Rows.Add(dr2);
+
+            string resulttest = DataTableToXml.ConvertToXMLString(dt, "root");
+
+            DataTable dttest = XmlToDataTable.ConvertFromXmlString(resulttest);
         }
     }
 }

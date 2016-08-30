@@ -30,6 +30,10 @@ namespace XmlAdapter.XmlRepository
                 new XElement(rootName));
             xdoc.Save(_filePath);
         }
+        public void ReadXML(string xml)
+        {
+            XElement xEle = XElement.Parse(xml);
+        }
         /// <summary>
         /// 向XML中添加元素
         /// </summary>
