@@ -326,5 +326,26 @@ namespace XmlAdapter.XmlRepository
         //XElement.AncestorsAndSelf() 获取元素的所有父元素（包含自己）
         //XElement.ElementsBeforeSelf() 获取同级元素之前的元素
         //XElement.ElementsAfterSelf() 获取同级元素之后的元素
+
+
+        /// <summary>
+        /// 创建带命名空间的XML元素
+        /// </summary>
+        /// <param name="rootName">节点名称</param>
+        /// <param name="rootNameSpace">节点命名空间（组元中item1为命名空间别名item2为命名空间值）</param>
+        /// <param name="childNameSpace">子节点命名空间（组元中item1为命名空间别名item2为命名空间值）</param>
+        /// <returns></returns>
+        public static XElement CreateDocumentWithNameSpace(string rootName, Tuple<string, string> rootNameSpace,
+            List<Tuple<string, string>> childNameSpace)
+        {
+            XElement root = new XElement(XName.Get(rootName, rootNameSpace.Item2),
+             new XAttribute(XNamespace.Xmlns + rootNameSpace.Item1, rootNameSpace.Item2));
+            foreach (var ns in childNameSpace)
+            {
+                XAttribute xa = new XAttribute(XNamespace.Xmlns + ns.Item1, ns.Item2);
+                root.Add(xa);
+            }
+            return root;
+        }
     }
 }
